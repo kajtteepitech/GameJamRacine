@@ -26,6 +26,9 @@ class main_loop:
         self.scene1 = pygame.image.load("assets/img/scene1.png")
         self.scene1 = pygame.transform.scale(self.scene1, (self.infoScreen.current_w, self.infoScreen.current_h))
 
+        self.scene2 = pygame.image.load("assets/img/scene2.jpg")
+        self.scene2 = pygame.transform.scale(self.scene2, (self.infoScreen.current_w, self.infoScreen.current_h))
+
         self.current_scene = "MAIN_MENU"
 
         self.button_start = Button(
@@ -47,6 +50,7 @@ class main_loop:
         # Scale the image keeping the aspect ratio
         self.player = pygame.transform.scale(self.player, (self.infoScreen.current_w // 6, self.infoScreen.current_h // 6 * 2.5))
         self.scene1 = pygame.transform.scale(self.scene1, (1920,1080))
+        self.scene2 = pygame.transform.scale(self.scene2, (1920,1080))
 
         self.previous_scene = ""
         self.previous_music = ""
@@ -88,6 +92,11 @@ class main_loop:
                         self.previous_music = self.current_scene
                         self.current_scene = "PAUSE_MENU"
                         self.pausemusic()
+                    elif self.current_scene == "STREET":
+                        self.previous_scene = self.current_scene
+                        self.previous_music = self.current_scene
+                        self.current_scene = "PAUSE_MENU"
+                        self.pausemusic()
 
                 if event.key == pygame.K_q:
                     self.left_pressed = True
@@ -109,14 +118,17 @@ class main_loop:
         self.player_vel_x = 0
         self.player_vel_y = 0
         
-        if self.left_pressed and not self.right_pressed and self.player_x > 0:
+        if self.left_pressed and not self.right_pressed:
             self.player_vel_x = -self.player_speed
-        if self.right_pressed and not self.left_pressed and self.player_x < self.infoScreen.current_w - self.player.get_width():
+        if self.right_pressed and not self.left_pressed:
             self.player_vel_x = self.player_speed
         
         self.player_x += self.player_vel_x
         self.player_y += self.player_vel_y
 
+        if (self.player_x > 1920 and self.current_scene == "GAME"):
+            self.current_scene = "STREET"
+            self.player_x = 0
 
     def draw(self):
         self.screen.fill((0, 0, 0))
@@ -129,7 +141,10 @@ class main_loop:
             self.screen.blit(self.scene1, (0, 0))
             self.screen.blit(self.player, (self.player_x, self.player_y))
 			
-            
+        if self.current_scene == "STREET":
+            self.screen.blit(self.scene2, (0, 0))
+            self.screen.blit(self.player, (self.player_x, self.player_y))
+
         elif self.current_scene == "PAUSE_MENU":
             self.screen.blit(self.pause_img, (0, 0))
 
@@ -138,7 +153,7 @@ class main_loop:
     def roommusic(self):
         pygame.mixer.music.load("assets/music/room.mp3")
         pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(0.2)
+        pygame.mixer.music.set_volume(0.15)
     def pausemusic(self):
         pygame.mixer.music.load("assets/music/pausemusic.wav")
         pygame.mixer.music.play(-1)
