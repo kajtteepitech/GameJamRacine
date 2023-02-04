@@ -32,6 +32,11 @@ class main_loop:
             bg="navy",
         )
 
+        self.left_pressed = False
+        self.right_pressed = False
+        self.player_speed = 5
+        self.player_vel_x = 0
+        self.player_vel_y = 0
         self.player_x = self.infoScreen.current_w // 2
         self.player_y = self.infoScreen.current_h // 2
 
@@ -52,18 +57,9 @@ class main_loop:
             if event.type == pygame.QUIT:
                 self.running = False
                 sys.exit()
-
-            keys = pygame.key.get_pressed()
-
-            if keys[pygame.K_q]:
-                self.player_x -= 5
-
-            if keys[pygame.K_d]:
-                self.player_x += 5
             
             if event.type == pygame.KEYDOWN:
-                pressed = pygame.key.get_pressed()
-                
+            
                 if event.key == pygame.K_ESCAPE:
                     self.running = False
                     sys.exit()
@@ -73,13 +69,34 @@ class main_loop:
                         self.current_scene = "MAIN_MENU"
                     elif self.current_scene == "MAIN_MENU":
                         self.current_scene = "PAUSE_MENU"
+
+                if event.key == pygame.K_q:
+                    self.left_pressed = True
+                if event.key == pygame.K_d:
+                    self.right_pressed = True
+
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_q:
+                    self.left_pressed = False
+                if event.key == pygame.K_d:
+                    self.right_pressed = False
             
             if self.button_start.click(event):
                 self.current_scene = "GAME"
                 
 
     def update(self):
-        pass
+        self.player_vel_x = 0
+        self.player_vel_y = 0
+        
+        if self.left_pressed and not self.right_pressed:
+            self.player_vel_x = -self.player_speed
+        if self.right_pressed and not self.left_pressed:
+            self.player_vel_x = self.player_speed
+        
+        self.player_x += self.player_vel_x
+        self.player_y += self.player_vel_y
+
 
     def draw(self):
         self.screen.fill((0, 0, 0))
