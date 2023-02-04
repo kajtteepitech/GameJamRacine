@@ -67,16 +67,18 @@ class main_loop:
                         self.previous_scene = self.current_scene
                         self.current_scene = "PAUSE_MENU"
 
-                if event.key == pygame.K_q:
-                    self.player.left_pressed = True
-                if event.key == pygame.K_d:
-                    self.player.right_pressed = True
+                if self.current_scene == "GAME":
+                    if event.key == pygame.K_q:
+                        self.player.left_pressed = True
+                    if event.key == pygame.K_d:
+                        self.player.right_pressed = True
 
             if event.type == pygame.KEYUP:
-                if event.key == pygame.K_q:
-                    self.player.left_pressed = False
-                if event.key == pygame.K_d:
-                    self.player.right_pressed = False
+                if self.current_scene == "GAME":
+                    if event.key == pygame.K_q:
+                        self.player.left_pressed = False
+                    if event.key == pygame.K_d:
+                        self.player.right_pressed = False
             
             if self.button_start.click(event):
                 self.current_scene = "GAME"
