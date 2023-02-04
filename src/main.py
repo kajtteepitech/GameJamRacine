@@ -89,9 +89,9 @@ class main_loop:
         self.player_vel_x = 0
         self.player_vel_y = 0
         
-        if self.left_pressed and not self.right_pressed:
+        if self.left_pressed and not self.right_pressed and self.player_x > 0:
             self.player_vel_x = -self.player_speed
-        if self.right_pressed and not self.left_pressed:
+        if self.right_pressed and not self.left_pressed and self.player_x < self.infoScreen.current_w - self.player.get_width():
             self.player_vel_x = self.player_speed
         
         self.player_x += self.player_vel_x
