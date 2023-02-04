@@ -96,6 +96,8 @@ class main_loop:
             
             if self.button_start.click(event):
                 self.current_scene = "GAME"
+                self.roommusic()
+
 
     def update(self):
         self.player_vel_x = 0
@@ -127,6 +129,10 @@ class main_loop:
 
         pygame.display.flip()
 
+    def roommusic(self):
+        pygame.mixer.music.load("assets/music/room.mp3")
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.2)
     def pausemusic(self):
         pygame.mixer.music.load("assets/music/pausemusic.wav")
         pygame.mixer.music.play(-1)
