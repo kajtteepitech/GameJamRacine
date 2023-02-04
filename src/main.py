@@ -49,6 +49,7 @@ class main_loop:
         self.scene1 = pygame.transform.scale(self.scene1, (1920,1080))
 
         self.previous_scene = ""
+        self.previous_music = ""
 
     def run(self):
         self.menumusic()
@@ -73,13 +74,18 @@ class main_loop:
                 if event.key == pygame.K_SPACE:
                     if self.current_scene == "PAUSE_MENU":
                         self.current_scene = self.previous_scene
-                        self.menumusic()
+                        if self.previous_music == "GAME":
+                            self.roommusic()
+                        if self.previous_music == "MAIN_MENU":
+                            self.menumusic()
                     elif self.current_scene == "MAIN_MENU":
                         self.previous_scene = self.current_scene
+                        self.previous_music = self.current_scene
                         self.current_scene = "PAUSE_MENU"
                         self.pausemusic()
                     elif self.current_scene == "GAME":
                         self.previous_scene = self.current_scene
+                        self.previous_music = self.current_scene
                         self.current_scene = "PAUSE_MENU"
                         self.pausemusic()
 
