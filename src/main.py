@@ -3,6 +3,7 @@
 import pygame
 import sys
 from src.Button import Button
+from src.Player import Player
 
 class main_loop:
     def __init__(self):
@@ -32,17 +33,7 @@ class main_loop:
             bg="navy",
         )
 
-        self.left_pressed = False
-        self.right_pressed = False
-        self.player_speed = 5
-        self.player_vel_x = 0
-        self.player_vel_y = 0
-        self.player_x = self.infoScreen.current_w // 2
-        self.player_y = self.infoScreen.current_h // 2
-
-        self.player = pygame.image.load("assets/img/player_left.png")
-        # Scale the image keeping the aspect ratio
-        self.player = pygame.transform.scale(self.player, (self.infoScreen.current_w // 10, self.infoScreen.current_h // 10 * 2.5))
+        self.player = Player(self.infoScreen.current_w // 3, self.infoScreen.current_h // 2, (self.infoScreen.current_w // 10, self.infoScreen.current_h // 10 * 2.5))
 
         self.previous_scene = ""
 
@@ -77,30 +68,21 @@ class main_loop:
                         self.current_scene = "PAUSE_MENU"
 
                 if event.key == pygame.K_q:
-                    self.left_pressed = True
+                    self.player.left_pressed = True
                 if event.key == pygame.K_d:
-                    self.right_pressed = True
+                    self.player.right_pressed = True
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_q:
-                    self.left_pressed = False
+                    self.player.left_pressed = False
                 if event.key == pygame.K_d:
-                    self.right_pressed = False
+                    self.player.right_pressed = False
             
             if self.button_start.click(event):
                 self.current_scene = "GAME"
 
     def update(self):
-        self.player_vel_x = 0
-        self.player_vel_y = 0
-        
-        if self.left_pressed and not self.right_pressed and self.player_x > 0:
-            self.player_vel_x = -self.player_speed
-        if self.right_pressed and not self.left_pressed and self.player_x < self.infoScreen.current_w - self.player.get_width():
-            self.player_vel_x = self.player_speed
-        
-        self.player_x += self.player_vel_x
-        self.player_y += self.player_vel_y
+        self.player.update(self.infoScreen)
 
 
     def draw(self):
@@ -111,10 +93,8 @@ class main_loop:
             self.button_start.show(self.screen)
 
         if self.current_scene == "GAME":
-            
-            self.screen.blit(self.player, (self.player_x, self.player_y))
+            self.player.draw(self.screen)
 			
-            
         elif self.current_scene == "PAUSE_MENU":
             self.screen.blit(self.pause_img, (0, 0))
 
