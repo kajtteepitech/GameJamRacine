@@ -7,7 +7,6 @@ from src.Button import Button
 class main_loop:
     def __init__(self):
         pygame.init()
-        pygame.key.set_repeat(3, 3)
         self.infoScreen = pygame.display.Info()
         self.screen = pygame.display.set_mode((self.infoScreen.current_w, self.infoScreen.current_h), pygame.FULLSCREEN)
         self.clock = pygame.time.Clock()
@@ -61,10 +60,13 @@ class main_loop:
                     self.running = False
                     sys.exit()
 
-                if event.key == pygame.K_q:
+                keys = pygame.key.get_pressed()
+                print(keys)
+
+                if pressed[pygame.K_q]:
                     self.player_x -= 1
 
-                if event.key == pygame.K_d:
+                if pressed[pygame.K_d]:
                     self.player_x += 1
                 
                 if event.key == pygame.K_SPACE:
