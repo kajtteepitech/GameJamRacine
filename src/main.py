@@ -23,6 +23,9 @@ class main_loop:
         self.pause_img = pygame.image.load("assets/img/pausemenu.jpg")
         self.pause_img = pygame.transform.scale(self.pause_img, (self.infoScreen.current_w, self.infoScreen.current_h))
 
+        self.scene1 = pygame.image.load("assets/img/scene1.png")
+        self.scene1 = pygame.transform.scale(self.scene1, (self.infoScreen.current_w, self.infoScreen.current_h))
+
         self.current_scene = "MAIN_MENU"
 
         self.button_start = Button(
@@ -43,6 +46,7 @@ class main_loop:
         self.player = pygame.image.load("assets/img/player_left.png")
         # Scale the image keeping the aspect ratio
         self.player = pygame.transform.scale(self.player, (self.infoScreen.current_w // 10, self.infoScreen.current_h // 10 * 2.5))
+        self.scene1 = pygame.transform.scale(self.scene1, (1920,1080))
 
         self.previous_scene = ""
 
@@ -111,7 +115,7 @@ class main_loop:
             self.button_start.show(self.screen)
 
         if self.current_scene == "GAME":
-            
+            self.screen.blit(self.scene1, (0, 0))
             self.screen.blit(self.player, (self.player_x, self.player_y))
 			
             
