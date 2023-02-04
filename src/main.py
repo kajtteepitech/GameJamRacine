@@ -41,11 +41,11 @@ class main_loop:
         self.player_vel_x = 0
         self.player_vel_y = 0
         self.player_x = self.infoScreen.current_w // 2
-        self.player_y = self.infoScreen.current_h // 1.3
+        self.player_y = self.infoScreen.current_h // 1.75
 
         self.player = pygame.image.load("assets/img/player_left.png")
         # Scale the image keeping the aspect ratio
-        self.player = pygame.transform.scale(self.player, (self.infoScreen.current_w // 10, self.infoScreen.current_h // 10 * 2.5))
+        self.player = pygame.transform.scale(self.player, (self.infoScreen.current_w // 6, self.infoScreen.current_h // 6 * 2.5))
         self.scene1 = pygame.transform.scale(self.scene1, (1920,1080))
 
         self.previous_scene = ""
