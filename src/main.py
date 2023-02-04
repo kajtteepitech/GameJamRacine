@@ -9,7 +9,6 @@ import random
 class main_loop:
     def __init__(self):
         pygame.init()
-        mixer.init()
         self.infoScreen = pygame.display.Info()
         self.screen = pygame.display.set_mode((self.infoScreen.current_w, self.infoScreen.current_h), pygame.FULLSCREEN)
         self.clock = pygame.time.Clock()
