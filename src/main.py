@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 import pygame
 from pygame import mixer
 import time
@@ -19,7 +20,7 @@ class main_loop:
         #self.enemies = [enemy(self)]
         self.game_over = False
 
-        self.img = pygame.image.load("src/mainmenu.png")
+        self.img = pygame.image.load("assets/mainmenu.png")
     def run(self):
         self.music()
         while self.running:
@@ -47,7 +48,7 @@ class main_loop:
 
 def main():
     pygame.init()
-    pygame.display.set_caption("Jam")
+    pygame.display.set_caption("The Father")
     main_loop().run()
 
 if __name__ == "__main__":
