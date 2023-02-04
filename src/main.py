@@ -47,7 +47,7 @@ class main_loop:
         self.previous_scene = ""
 
     def run(self):
-        self.music()
+        self.menumusic()
         while self.running:
             self.clock.tick(60)
             self.events()
@@ -69,12 +69,15 @@ class main_loop:
                 if event.key == pygame.K_SPACE:
                     if self.current_scene == "PAUSE_MENU":
                         self.current_scene = self.previous_scene
+                        self.menumusic()
                     elif self.current_scene == "MAIN_MENU":
                         self.previous_scene = self.current_scene
                         self.current_scene = "PAUSE_MENU"
+                        self.pausemusic()
                     elif self.current_scene == "GAME":
                         self.previous_scene = self.current_scene
                         self.current_scene = "PAUSE_MENU"
+                        self.pausemusic()
 
                 if event.key == pygame.K_q:
                     self.left_pressed = True
@@ -120,7 +123,10 @@ class main_loop:
 
         pygame.display.flip()
 
-    def music(self):
+    def pausemusic(self):
+        pygame.mixer.music.load("assets/music/pausemusic.wav")
+        pygame.mixer.music.play(-1)
+    def menumusic(self):
         pygame.mixer.music.load("assets/music/mainmusic.wav")
         pygame.mixer.music.play(-1)
 
