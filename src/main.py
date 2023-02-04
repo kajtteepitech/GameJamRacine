@@ -43,7 +43,7 @@ class main_loop:
         self.screen.blit(self.img, (0, 0))
         pygame.display.flip()
     def music(self):
-        pygame.mixer.music.load("src/mainmusic.wav")
+        pygame.mixer.music.load("assets/mainmusic.wav")
         pygame.mixer.music.play(-1)
 
 def main():
