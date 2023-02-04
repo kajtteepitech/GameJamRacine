@@ -33,7 +33,7 @@ class main_loop:
             bg="navy",
         )
 
-        self.player = Player(self.infoScreen.current_w // 3, self.infoScreen.current_h // 2, (self.infoScreen.current_w // 10, self.infoScreen.current_h // 10 * 2.5))
+        self.player = Player(self.infoScreen.current_w // 3, self.infoScreen.current_h // 3, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
 
         self.previous_scene = ""
 
@@ -94,7 +94,7 @@ class main_loop:
 
 
     def draw(self):
-        self.screen.fill((0, 0, 0))
+        self.screen.fill((255, 255, 255))
 
         if self.current_scene == "MAIN_MENU":
             self.screen.blit(self.bg_img, (0, 0))

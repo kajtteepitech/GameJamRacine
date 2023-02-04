@@ -10,18 +10,69 @@ class Player:
         self.left_pressed = False
         self.right_pressed = False
         self.speed = 6
-        self.player = pygame.image.load("assets/img/player_left.png")
-        self.player = pygame.transform.scale(self.player, scale)
+        self.scale = scale
+
+        self.sprites = {
+            "left": [],
+            "right": [],
+            "idle": []
+        }
+        self.init_sprites()
+        self.current_sprite = 0
+        self.image = self.sprites["idle"][self.current_sprite]
+        self.image = pygame.transform.scale(self.image, scale)
+
+    def init_sprites(self):
+        self.sprites["left"].append(pygame.image.load("assets/img/player/run_left_1.png"))
+        self.sprites["left"].append(pygame.image.load("assets/img/player/run_left_2.png"))
+        self.sprites["left"].append(pygame.image.load("assets/img/player/run_left_3.png"))
+        self.sprites["left"].append(pygame.image.load("assets/img/player/run_left_4.png"))
+        self.sprites["right"].append(pygame.image.load("assets/img/player/run_right_1.png"))
+        self.sprites["right"].append(pygame.image.load("assets/img/player/run_right_2.png"))
+        self.sprites["right"].append(pygame.image.load("assets/img/player/run_right_3.png"))
+        self.sprites["right"].append(pygame.image.load("assets/img/player/run_right_4.png"))
+        self.sprites["idle"].append(pygame.image.load("assets/img/player/idle_1.png"))
+        self.sprites["idle"].append(pygame.image.load("assets/img/player/idle_2.png"))
+        self.sprites["idle"].append(pygame.image.load("assets/img/player/idle_3.png"))
+        self.sprites["idle"].append(pygame.image.load("assets/img/player/idle_4.png"))
+
 
     def draw(self, screen):
-        screen.blit(self.player, (self.x, self.y))
+        screen.blit(self.image, (self.x, self.y))
 
     def update(self, infoScreen):
         self.velX = 0
         
         if self.left_pressed and not self.right_pressed and self.x > 0:
             self.velX = -self.speed
-        if self.right_pressed and not self.left_pressed and self.x < infoScreen.current_w - self.player.get_width():
+        if self.right_pressed and not self.left_pressed and self.x < infoScreen.current_w - self.image.get_width():
             self.velX = self.speed
         
         self.x += self.velX
+
+        if self.left_pressed:
+            self.current_sprite += 0.09
+
+            if self.current_sprite >= len(self.sprites["left"]):
+                self.current_sprite = 0
+
+            self.image = self.sprites["left"][int(self.current_sprite)]
+            self.image = pygame.transform.scale(self.image, self.scale)
+
+        if self.right_pressed:
+            self.current_sprite += 0.09
+
+            if self.current_sprite >= len(self.sprites["right"]):
+                self.current_sprite = 0
+
+            self.image = self.sprites["right"][int(self.current_sprite)]
+            self.image = pygame.transform.scale(self.image, self.scale)
+
+        if not self.right_pressed and not self.left_pressed:
+            self.current_sprite += 0.05
+
+            if self.current_sprite >= len(self.sprites["idle"]):
+                self.current_sprite = 0
+
+            self.image = self.sprites["idle"][int(self.current_sprite)]
+            self.image = pygame.transform.scale(self.image, self.scale)
