@@ -17,7 +17,7 @@ class main_loop:
         #self.enemies = [enemy(self)]
         self.game_over = False
 
-        self.img = pygame.image.load("assets/mainmenu.png")
+        self.img = pygame.image.load("assets/img/mainmenu.png")
         self.img = pygame.transform.scale(self.img, (self.infoScreen.current_w, self.infoScreen.current_h))
 
         self.current_scene = "MAIN_MENU"
@@ -60,7 +60,7 @@ class main_loop:
             self.button_start.show(self.screen)
         pygame.display.flip()
     def music(self):
-        pygame.mixer.music.load("assets/mainmusic.wav")
+        pygame.mixer.music.load("assets/music/mainmusic.wav")
         pygame.mixer.music.play(-1)
 
 def main():
