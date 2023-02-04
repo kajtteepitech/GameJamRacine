@@ -18,8 +18,11 @@ class main_loop:
         #self.enemies = [enemy(self)]
         self.game_over = False
 
-        self.img = pygame.image.load("assets/img/mainmenu.png")
-        self.img = pygame.transform.scale(self.img, (self.infoScreen.current_w, self.infoScreen.current_h))
+        self.bg_img = pygame.image.load("assets/img/mainmenu.png")
+        self.bg_img = pygame.transform.scale(self.bg_img, (self.infoScreen.current_w, self.infoScreen.current_h))
+        
+        self.pause_img = pygame.image.load("assets/img/pausemenu.jpg")
+        self.pause_img = pygame.transform.scale(self.pause_img, (self.infoScreen.current_w, self.infoScreen.current_h))
 
         self.current_scene = "MAIN_MENU"
 
@@ -50,7 +53,7 @@ class main_loop:
             if event.type == pygame.QUIT:
                 self.running = False
                 sys.exit()
-
+            
             if event.type == pygame.KEYDOWN:
                 pressed = pygame.key.get_pressed()
                 
@@ -63,23 +66,35 @@ class main_loop:
 
                 if event.key == pygame.K_d:
                     self.player_x += 1
+                
+                if event.key == pygame.K_SPACE:
+                    if self.current_scene == "PAUSE_MENU":
+                        self.current_scene = "MAIN_MENU"
+                    elif self.current_scene == "MAIN_MENU":
+                        self.current_scene = "PAUSE_MENU"
             
             if self.button_start.click(event):
                 self.current_scene = "GAME"
+                
 
     def update(self):
         pass
 
     def draw(self):
         self.screen.fill((0, 0, 0))
+
         if self.current_scene == "MAIN_MENU":
-            self.screen.blit(self.img, (0, 0))
+            self.screen.blit(self.bg_img, (0, 0))
             self.button_start.show(self.screen)
 
         if self.current_scene == "GAME":
             self.screen.blit(self.player, (self.player_x, self.player_y))
+            
+        elif self.current_scene == "PAUSE_MENU":
+            self.screen.blit(self.pause_img, (0, 0))
 
         pygame.display.flip()
+
     def music(self):
         pygame.mixer.music.load("assets/music/mainmusic.wav")
         pygame.mixer.music.play(-1)
