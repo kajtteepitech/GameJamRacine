@@ -6,6 +6,7 @@ from src.Button import Button
 
 class main_loop:
     def __init__(self):
+        pygame.init()
         self.infoScreen = pygame.display.Info()
         self.screen = pygame.display.set_mode((self.infoScreen.current_w, self.infoScreen.current_h), pygame.FULLSCREEN)
         self.clock = pygame.time.Clock()
@@ -29,6 +30,7 @@ class main_loop:
         )
 
     def run(self):
+        self.music()
         while self.running:
             self.clock.tick(60)
             self.events()
@@ -57,6 +59,9 @@ class main_loop:
             self.screen.blit(self.img, (0, 0))
             self.button_start.show(self.screen)
         pygame.display.flip()
+    def music(self):
+        pygame.mixer.music.load("assets/mainmusic.wav")
+        pygame.mixer.music.play(-1)
 
 def main():
     pygame.init()
