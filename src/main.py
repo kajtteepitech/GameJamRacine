@@ -18,6 +18,7 @@ class main_loop:
         self.game_over = False
 
         self.img = pygame.image.load("assets/mainmenu.png")
+        self.img = pygame.transform.scale(self.img, (self.infoScreen.current_w, self.infoScreen.current_h))
     def run(self):
         while self.running:
             self.clock.tick(60)
