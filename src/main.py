@@ -128,7 +128,8 @@ class main_loop:
 
         if (self.player_x > 1920 and self.current_scene == "GAME"):
             self.current_scene = "STREET"
-            self.player_x = 0
+            self.streetmusic()
+            self.player_x = 50
 
     def draw(self):
         self.screen.fill((0, 0, 0))
@@ -150,10 +151,14 @@ class main_loop:
 
         pygame.display.flip()
 
+    def streetmusic(self):
+        pygame.mixer.music.load("assets/music/street.mp3")
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(3)
     def roommusic(self):
         pygame.mixer.music.load("assets/music/room.mp3")
         pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(0.15)
+        pygame.mixer.music.set_volume(0.05)
     def pausemusic(self):
         pygame.mixer.music.load("assets/music/pausemusic.wav")
         pygame.mixer.music.play(-1)
