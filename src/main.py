@@ -52,6 +52,14 @@ class main_loop:
             if event.type == pygame.QUIT:
                 self.running = False
                 sys.exit()
+
+            keys = pygame.key.get_pressed()
+
+            if keys[pygame.K_q]:
+                self.player_x -= 5
+
+            if keys[pygame.K_d]:
+                self.player_x += 5
             
             if event.type == pygame.KEYDOWN:
                 pressed = pygame.key.get_pressed()
@@ -59,15 +67,6 @@ class main_loop:
                 if event.key == pygame.K_ESCAPE:
                     self.running = False
                     sys.exit()
-
-                keys = pygame.key.get_pressed()
-                print(keys)
-
-                if pressed[pygame.K_q]:
-                    self.player_x -= 1
-
-                if pressed[pygame.K_d]:
-                    self.player_x += 1
                 
                 if event.key == pygame.K_SPACE:
                     if self.current_scene == "PAUSE_MENU":
