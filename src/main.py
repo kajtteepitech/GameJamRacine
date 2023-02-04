@@ -7,6 +7,7 @@ from src.Button import Button
 class main_loop:
     def __init__(self):
         pygame.init()
+        pygame.key.set_repeat(3, 3)
         self.infoScreen = pygame.display.Info()
         self.screen = pygame.display.set_mode((self.infoScreen.current_w, self.infoScreen.current_h), pygame.FULLSCREEN)
         self.clock = pygame.time.Clock()
@@ -29,6 +30,13 @@ class main_loop:
             bg="navy",
         )
 
+        self.player_x = self.infoScreen.current_w // 2
+        self.player_y = self.infoScreen.current_h // 2
+
+        self.player = pygame.image.load("assets/img/player_left.png")
+        # Scale the image keeping the aspect ratio
+        self.player = pygame.transform.scale(self.player, (self.infoScreen.current_w // 10, self.infoScreen.current_h // 10 * 2.5))
+
     def run(self):
         self.music()
         while self.running:
@@ -42,10 +50,19 @@ class main_loop:
             if event.type == pygame.QUIT:
                 self.running = False
                 sys.exit()
+
             if event.type == pygame.KEYDOWN:
+                pressed = pygame.key.get_pressed()
+                
                 if event.key == pygame.K_ESCAPE:
                     self.running = False
                     sys.exit()
+
+                if event.key == pygame.K_q:
+                    self.player_x -= 1
+
+                if event.key == pygame.K_d:
+                    self.player_x += 1
             
             if self.button_start.click(event):
                 self.current_scene = "GAME"
@@ -58,6 +75,10 @@ class main_loop:
         if self.current_scene == "MAIN_MENU":
             self.screen.blit(self.img, (0, 0))
             self.button_start.show(self.screen)
+
+        if self.current_scene == "GAME":
+            self.screen.blit(self.player, (self.player_x, self.player_y))
+
         pygame.display.flip()
     def music(self):
         pygame.mixer.music.load("assets/music/mainmusic.wav")
