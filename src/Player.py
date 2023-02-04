@@ -43,9 +43,9 @@ class Player:
     def update(self, infoScreen):
         self.velX = 0
         
-        if self.left_pressed and not self.right_pressed and self.x > 0:
+        if self.left_pressed and not self.right_pressed:
             self.velX = -self.speed
-        if self.right_pressed and not self.left_pressed and self.x < infoScreen.current_w - self.image.get_width():
+        if self.right_pressed and not self.left_pressed:
             self.velX = self.speed
         
         self.x += self.velX
