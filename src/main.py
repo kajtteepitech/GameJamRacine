@@ -5,6 +5,7 @@ import pygame.freetype
 import sys
 from src.Button import Button
 from src.Player import Player
+from src.TextBox import TextBox
 
 class main_loop:
     def __init__(self):
@@ -15,7 +16,7 @@ class main_loop:
         self.clock = pygame.time.Clock()
         self.running = True
         self.font = pygame.font.SysFont("Arial", 30)
-        self.GAME_FONT = pygame.freetype.Font("assets/font1.ttf", 30)
+        self.GAME_FONT = pygame.freetype.Font("assets/fonts/default.ttf", 30)
         self.score = 0
         #self.player = player(self)
         #self.enemies = [enemy(self)]
@@ -49,6 +50,8 @@ class main_loop:
 
         self.previous_scene = ""
         self.previous_music = ""
+
+        self.hobo_text = TextBox("Ouga Ouga", (255, 255, 255), self.infoScreen.current_w // 2, 100, "assets/fonts/default.ttf", 30)
 
     def run(self):
         self.menumusic()
@@ -170,6 +173,7 @@ class main_loop:
         if self.current_scene == "STREET":
             self.screen.blit(self.scene2, (0, 0))
             self.player.draw(self.screen)
+            self.hobo_text.show(self.screen)
 
         if self.current_scene == "FOREST":
             self.screen.blit(self.scene3, (0, 0))
