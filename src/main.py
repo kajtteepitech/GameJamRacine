@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import pygame
+import pygame.freetype
 import sys
 from src.Button import Button
 from src.Player import Player
@@ -8,11 +9,13 @@ from src.Player import Player
 class main_loop:
     def __init__(self):
         pygame.init()
+        pygame.font.init()
         self.infoScreen = pygame.display.Info()
         self.screen = pygame.display.set_mode((self.infoScreen.current_w, self.infoScreen.current_h), pygame.FULLSCREEN)
         self.clock = pygame.time.Clock()
         self.running = True
         self.font = pygame.font.SysFont("Arial", 30)
+        self.GAME_FONT = pygame.freetype.Font("assets/font1.ttf", 30)
         self.score = 0
         #self.player = player(self)
         #self.enemies = [enemy(self)]
@@ -51,6 +54,7 @@ class main_loop:
             self.events()
             self.update()
             self.draw()
+            self.gameplayevents()
 
     def events(self):
         for event in pygame.event.get():
@@ -116,14 +120,20 @@ class main_loop:
     def update(self):
         self.player.update(self.infoScreen)
 
-        if (self.player.x > self.infoScreen.current_w - 50 and self.current_scene == "GAME"):
+        if (self.player.x > self.infoScreen.current_w - 130 and self.current_scene == "GAME"):
             self.current_scene = "STREET"
             self.streetmusic()
             self.player.x = 50
         if (self.player.x < 0 and self.current_scene == "STREET"):
             self.current_scene = "GAME"
             self.roommusic()
-            self.player.x = self.infoScreen.current_w - 50
+            self.player.x = self.infoScreen.current_w - 200
+
+    def gameplayevents(self):
+        if (self.player.x > self.infoScreen.current_w - 200 and self.current_scene == "STREET"):
+            text_surface, rect = self.GAME_FONT.render("Hello World!", (0, 0, 0))
+            self.screen.blit(text_surface, (40, 250))
+
 
     def draw(self):
         self.screen.fill((255, 255, 255))
