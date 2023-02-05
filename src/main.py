@@ -84,6 +84,8 @@ class main_loop:
                             self.menumusic()
                         if self.previous_music == "STREET":
                             self.streetmusic()
+                        if self.previous_music == "FOREST":
+                            self.forestmusic()
                     elif self.current_scene == "MAIN_MENU":
                         self.previous_scene = self.current_scene
                         self.previous_music = self.current_scene
@@ -97,6 +99,11 @@ class main_loop:
                         self.current_scene = "PAUSE_MENU"
                         self.pausemusic()
                     elif self.current_scene == "STREET":
+                        self.previous_scene = self.current_scene
+                        self.previous_music = self.current_scene
+                        self.current_scene = "PAUSE_MENU"
+                        self.pausemusic()
+                    elif self.current_scene == "FOREST":
                         self.previous_scene = self.current_scene
                         self.previous_music = self.current_scene
                         self.current_scene = "PAUSE_MENU"
