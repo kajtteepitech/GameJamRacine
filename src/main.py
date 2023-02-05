@@ -9,6 +9,7 @@ from src.Brother import Brother
 from src.Keys import Key
 from src.TextBox import TextBox
 from src.Body import Body
+from src.Arouf import Arouf
 
 class main_loop:
     def __init__(self):
@@ -54,6 +55,7 @@ class main_loop:
         self.player = Player(self.infoScreen.current_w // 3, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
         self.brother = Brother(self.infoScreen.current_w - 300, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
         self.body = Body(self.infoScreen.current_w // 2, self.infoScreen.current_h - 300, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
+        self.arouf = Arouf(self.infoScreen.current_w // 10, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
 
         self.previous_scene = ""
         self.previous_music = ""
@@ -133,6 +135,8 @@ class main_loop:
                         self.player.right_pressed = True
                     if event.key == pygame.K_r:
                         self.player.is_fighting = True
+                        if self.arouf.x <= self.player.x + 150 and self.arouf.x >= self.player.x - 150:
+                            self.arouf.health -= 25
 
             if event.type == pygame.KEYUP:
                 if self.current_scene != "MAIN_MENU" or self.current_scene != "PAUSE_MENU":
@@ -163,6 +167,7 @@ class main_loop:
     def update(self):
         self.player.update(self.infoScreen)
         self.brother.update(self.infoScreen)
+        self.arouf.update(self.infoScreen)
 
         if (self.player.x > self.infoScreen.current_w - 130 and self.current_scene == "GAME"):
             self.current_scene = "STREET"
@@ -208,6 +213,9 @@ class main_loop:
         if self.current_scene == "STREET":
             self.screen.blit(self.scene2, (0, 0))
             self.player.draw(self.screen)
+            if self.current_level == 1 and self.found_body:
+                if self.arouf.health > 0:
+                    self.arouf.draw(self.screen)
             if self.current_level == 0:
                 self.brother.draw(self.screen)
                 if self.player.x > self.infoScreen.current_w - 700:
