@@ -12,12 +12,15 @@ class Player:
         self.speed = 6
         self.scale = scale
         self.last_direction = "right"
+        self.is_fighting = False
 
         self.sprites = {
             "left": [],
             "right": [],
             "idle_left": [],
-            "idle_right": []
+            "idle_right": [],
+            "fight_left": [],
+            "fight_right": []
         }
         self.init_sprites()
         self.current_sprite = 0
@@ -41,6 +44,14 @@ class Player:
         self.sprites["idle_right"].append(pygame.image.load("assets/img/player/idle_right_2.png"))
         self.sprites["idle_right"].append(pygame.image.load("assets/img/player/idle_right_3.png"))
         self.sprites["idle_right"].append(pygame.image.load("assets/img/player/idle_right_4.png"))
+        self.sprites["fight_left"].append(pygame.image.load("assets/img/player/fight_left_1.png"))
+        self.sprites["fight_left"].append(pygame.image.load("assets/img/player/fight_left_2.png"))
+        self.sprites["fight_left"].append(pygame.image.load("assets/img/player/fight_left_3.png"))
+        self.sprites["fight_left"].append(pygame.image.load("assets/img/player/fight_left_4.png"))
+        self.sprites["fight_right"].append(pygame.image.load("assets/img/player/fight_right_1.png"))
+        self.sprites["fight_right"].append(pygame.image.load("assets/img/player/fight_right_2.png"))
+        self.sprites["fight_right"].append(pygame.image.load("assets/img/player/fight_right_3.png"))
+        self.sprites["fight_right"].append(pygame.image.load("assets/img/player/fight_right_4.png"))
 
     def draw(self, screen):
         screen.blit(self.image, (self.x, self.y))
@@ -91,4 +102,22 @@ class Player:
                     self.current_sprite = 0
 
                 self.image = self.sprites["idle_left"][int(self.current_sprite)]
+                self.image = pygame.transform.scale(self.image, self.scale)
+        
+        if self.is_fighting:
+            if self.last_direction == "right":
+                self.current_sprite += 0.09
+
+                if self.current_sprite >= len(self.sprites["fight_right"]):
+                    self.current_sprite = 0
+
+                self.image = self.sprites["fight_right"][int(self.current_sprite)]
+                self.image = pygame.transform.scale(self.image, self.scale)
+            else:
+                self.current_sprite += 0.09
+
+                if self.current_sprite >= len(self.sprites["fight_left"]):
+                    self.current_sprite = 0
+
+                self.image = self.sprites["fight_left"][int(self.current_sprite)]
                 self.image = pygame.transform.scale(self.image, self.scale)

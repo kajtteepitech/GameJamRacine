@@ -59,7 +59,6 @@ class main_loop:
                 sys.exit()
             
             if event.type == pygame.KEYDOWN:
-            
                 if event.key == pygame.K_ESCAPE:
                     self.running = False
                     sys.exit()
@@ -98,6 +97,8 @@ class main_loop:
                         self.player.left_pressed = True
                     if event.key == pygame.K_d:
                         self.player.right_pressed = True
+                    if event.key == pygame.K_r:
+                        self.player.is_fighting = True
 
             if event.type == pygame.KEYUP:
                 if self.current_scene != "MAIN_MENU" or self.current_scene != "PAUSE_MENU":
@@ -105,6 +106,8 @@ class main_loop:
                         self.player.left_pressed = False
                     if event.key == pygame.K_d:
                         self.player.right_pressed = False
+                    if event.key == pygame.K_r:
+                        self.player.is_fighting = False
             
             if self.button_start.click(event):
                 self.current_scene = "GAME"
