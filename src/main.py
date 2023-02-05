@@ -8,6 +8,7 @@ from src.Player import Player
 from src.Brother import Brother
 from src.Keys import Key
 from src.TextBox import TextBox
+from src.Body import Body
 
 class main_loop:
     def __init__(self):
@@ -24,6 +25,7 @@ class main_loop:
         #self.enemies = [enemy(self)]
         self.game_over = False
         self.can_get_key = False
+        self.found_body = False
 
         self.bg_img = pygame.image.load("assets/img/mainmenu.png")
         self.bg_img = pygame.transform.scale(self.bg_img, (self.infoScreen.current_w, self.infoScreen.current_h))
@@ -53,11 +55,12 @@ class main_loop:
         self.key = Key(self.infoScreen.current_w // 6, self.infoScreen.current_h - 150, (self.infoScreen.current_w // 25, self.infoScreen.current_h // 25))
         self.player = Player(self.infoScreen.current_w // 3, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
         self.brother = Brother(self.infoScreen.current_w - 300, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
+        self.body = Body(self.infoScreen.current_w - 300, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
 
         self.previous_scene = ""
         self.previous_music = ""
 
-        self.brother_text = TextBox("What's up Tony! Are you ready to go see the Don? Go get my car keys real quick, I'm sure you'll get accepted in the family no problemo!", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 30)
+        self.brother_text = TextBox("What's up Tony! Are you ready to go see the Don? Go get my car keys real quick!", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 30)
         self.welcome_text = TextBox("Meet up with your brother Alfredo in the street", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 30)
         self.get_key_text = TextBox("Find and get the keys and join Alfreado.", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 30)
         self.brother_death_text = TextBox("Jesus Christ! My brother just died... He tells me to go see the Don. I need to find him.", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 30)
@@ -155,6 +158,9 @@ class main_loop:
                 self.current_scene = "GAME"
                 self.roommusic()
 
+            if (self.current_level == 0 and self.current_scene == "FOREST" and self.found_body == False):
+                self.found_body = True
+
 
     def update(self):
         self.player.update(self.infoScreen)
@@ -187,6 +193,12 @@ class main_loop:
 
     def draw(self):
         self.screen.fill((255, 255, 255))
+
+        if (self.current_level == 0 and self.current_scene == "GAME" and self.can_get_key == True):
+            self.key.draw(self.screen, self.player)
+
+        if (self.current_level == 1 and self.current_scene == "FOREST" and self.found_body == True):
+            self.body.draw(self.screen)
 
         if self.current_scene == "MAIN_MENU":
             self.screen.blit(self.bg_img, (0, 0))
