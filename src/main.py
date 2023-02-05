@@ -21,11 +21,9 @@ class main_loop:
         self.font = pygame.font.SysFont("Arial", 30)
         self.GAME_FONT = pygame.freetype.Font("assets/fonts/default.ttf", 30)
         self.score = 0
-        #self.player = player(self)
-        #self.enemies = [enemy(self)]
         self.game_over = False
         self.can_get_key = False
-        self.found_body = True
+        self.found_body = False
 
         self.bg_img = pygame.image.load("assets/img/mainmenu.png")
         self.bg_img = pygame.transform.scale(self.bg_img, (self.infoScreen.current_w, self.infoScreen.current_h))
@@ -42,8 +40,8 @@ class main_loop:
         self.scene3 = pygame.image.load("assets/img/scene3.jpg")
         self.scene3 = pygame.transform.scale(self.scene3, (self.infoScreen.current_w, self.infoScreen.current_h))
 
-        self.current_scene = "STREET"
-        self.current_level = 1
+        self.current_scene = "MAIN_MENU"
+        self.current_level = 0
 
         self.button_start = Button(
             "Start",
@@ -182,7 +180,6 @@ class main_loop:
             self.current_scene = "STREET"
             self.streetmusic()
             self.player.x = self.infoScreen.current_w - 200
-
 
     def gameplayevents(self):
         if (self.player.x > self.infoScreen.current_w - 200 and self.current_scene == "STREET"):
