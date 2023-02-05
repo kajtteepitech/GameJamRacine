@@ -11,12 +11,13 @@ class Key:
             "key": [],
         }
         self.init_sprites()
+        self.current_sprite = 0
         self.image = self.sprites["key"][self.current_sprite]
         self.image = pygame.transform.scale(self.image, scale)
 
     def init_sprites(self):
         self.sprites["key"].append(pygame.image.load("assets/img/key.png"))
-        self.sprites["idle_left"].append(pygame.image.load("assets/img/key_selected.png"))
+        self.sprites["key"].append(pygame.image.load("assets/img/key_selected.png"))
 
     def draw(self, screen):
         screen.blit(self.image, (self.x, self.y))

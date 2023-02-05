@@ -50,7 +50,7 @@ class main_loop:
             bg="navy",
         )
 
-        self.
+        self.key = Key(400, 500, (self.infoScreen.current_w // 3, self.infoScreen.current_h - 380))
         self.player = Player(self.infoScreen.current_w // 3, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
         self.brother = Brother(self.infoScreen.current_w - 300, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
 
@@ -121,8 +121,7 @@ class main_loop:
                     if event.key == pygame.K_q:
                         self.player.left_pressed = True
                     if event.key == pygame.K_d:
-                        if (self.current_level == 0 and self.player.x < 1470):
-                            self.player.right_pressed = True
+                        self.player.right_pressed = True
                     if event.key == pygame.K_r:
                         self.player.is_fighting = True
 
@@ -140,7 +139,7 @@ class main_loop:
                 self.can_get_key = True
 
             if (self.current_level == 0 and self.current_scene == "GAME" and self.can_get_key == True):
-
+                self.key.draw(self.screen)
 
             if self.button_start.click(event):
                 self.current_scene = "GAME"
