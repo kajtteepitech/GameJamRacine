@@ -33,6 +33,9 @@ class main_loop:
         self.scene2 = pygame.image.load("assets/img/scene2.jpg")
         self.scene2 = pygame.transform.scale(self.scene2, (self.infoScreen.current_w, self.infoScreen.current_h))
 
+        self.scene3 = pygame.image.load("assets/img/scene3.jpg")
+        self.scene3 = pygame.transform.scale(self.scene3, (self.infoScreen.current_w, self.infoScreen.current_h))
+
         self.current_scene = "MAIN_MENU"
 
         self.button_start = Button(
@@ -128,10 +131,18 @@ class main_loop:
             self.current_scene = "GAME"
             self.roommusic()
             self.player.x = self.infoScreen.current_w - 200
+        if (self.player.x > self.infoScreen.current_w - 130 and self.current_scene == "STREET"):
+            self.current_scene = "FOREST"
+            self.forestmusic()
+            self.player.x = 50
+        if (self.player.x < 0 and self.current_scene == "FOREST"):
+            self.current_scene = "STREET"
+            self.streetmusic()
+            self.player.x = self.infoScreen.current_w - 200
 
     def gameplayevents(self):
         if (self.player.x > self.infoScreen.current_w - 200 and self.current_scene == "STREET"):
-            text_surface, rect = self.GAME_FONT.render("Hello World!", (0, 0, 0))
+            text_surface, rect = self.GAME_FONT.render("Hello World!", (255, 255, 255))
             self.screen.blit(text_surface, (40, 250))
 
 
@@ -150,11 +161,18 @@ class main_loop:
             self.screen.blit(self.scene2, (0, 0))
             self.player.draw(self.screen)
 
+        if self.current_scene == "FOREST":
+            self.screen.blit(self.scene3, (0, 0))
+            self.player.draw(self.screen)
+
         elif self.current_scene == "PAUSE_MENU":
             self.screen.blit(self.pause_img, (0, 0))
 
         pygame.display.flip()
 
+    def forestmusic(self):
+        pygame.mixer.music.load("assets/music/forest.mp3")
+        pygame.mixer.music.play(-1)
     def streetmusic(self):
         pygame.mixer.music.load("assets/music/street.mp3")
         pygame.mixer.music.play(-1)
