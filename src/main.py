@@ -51,7 +51,11 @@ class main_loop:
         self.previous_scene = ""
         self.previous_music = ""
 
-        self.hobo_text = TextBox("Ouga Ouga", (255, 255, 255), self.infoScreen.current_w // 2, 100, "assets/fonts/default.ttf", 30)
+        self.brother_text = TextBox("What's up Tony! Are you ready to go see the Don? Go get my car keys real quick, I'm sure you'll get accepted in the family no problemo!", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 30)
+        self.welcome_text = TextBox("Meet up with your brother Alfredo in the street", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 30)
+        self.get_key_text = TextBox("Find and get the keys and join Alfreado.", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 30)
+
+        self.counter_passed = 0
 
     def run(self):
         self.menumusic()
@@ -140,24 +144,27 @@ class main_loop:
             self.current_scene = "STREET"
             self.streetmusic()
             self.player.x = 50
+            self.counter_passed += 1
         if (self.player.x < 0 and self.current_scene == "STREET"):
             self.current_scene = "GAME"
             self.roommusic()
             self.player.x = self.infoScreen.current_w - 200
+            self.counter_passed += 1
         if (self.player.x > self.infoScreen.current_w - 130 and self.current_scene == "STREET"):
             self.current_scene = "FOREST"
             self.forestmusic()
             self.player.x = 50
+            self.counter_passed += 1
         if (self.player.x < 0 and self.current_scene == "FOREST"):
             self.current_scene = "STREET"
             self.streetmusic()
             self.player.x = self.infoScreen.current_w - 200
+            self.counter_passed += 1
 
     def gameplayevents(self):
         if (self.player.x > self.infoScreen.current_w - 200 and self.current_scene == "STREET"):
             text_surface, rect = self.GAME_FONT.render("Hello World!", (255, 255, 255))
             self.screen.blit(text_surface, (40, 250))
-
 
     def draw(self):
         self.screen.fill((255, 255, 255))
@@ -169,11 +176,16 @@ class main_loop:
         if self.current_scene == "GAME":
             self.screen.blit(self.scene1, (0, 0))
             self.player.draw(self.screen)
+            if self.counter_passed == 0:
+                self.welcome_text.show(self.screen)
+            elif self.counter_passed == 2:
+                self.get_key_text.show(self.screen)
 			
         if self.current_scene == "STREET":
             self.screen.blit(self.scene2, (0, 0))
             self.player.draw(self.screen)
-            self.hobo_text.show(self.screen)
+            if self.counter_passed == 1 and self.player.x > self.infoScreen.current_w - 500:
+                self.brother_text.show(self.screen)
 
         if self.current_scene == "FOREST":
             self.screen.blit(self.scene3, (0, 0))
