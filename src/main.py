@@ -9,6 +9,7 @@ from src.Brother import Brother
 from src.Keys import Key
 from src.TextBox import TextBox
 from src.Body import Body
+from src.Arouf import Arouf
 
 class main_loop:
     def __init__(self):
@@ -59,6 +60,7 @@ class main_loop:
         self.key = Key(self.infoScreen.current_w // 6, self.infoScreen.current_h - 150, (self.infoScreen.current_w // 25, self.infoScreen.current_h // 25))
         self.player = Player(self.infoScreen.current_w // 3, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
         self.brother = Brother(self.infoScreen.current_w - 300, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
+        self.arouf = Arouf(self.infoScreen.current_w - 1600, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
         self.body = Body(800, 850, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
 
         self.previous_scene = ""
@@ -172,6 +174,7 @@ class main_loop:
     def update(self):
         self.player.update(self.infoScreen)
         self.brother.update(self.infoScreen)
+        self.arouf.update(self.infoScreen)
 
         if (self.player.x > self.infoScreen.current_w - 130 and self.current_scene == "GAME"):
             self.current_scene = "STREET"
@@ -220,6 +223,8 @@ class main_loop:
         if self.current_scene == "STREET":
             self.screen.blit(self.scene2, (0, 0))
             self.player.draw(self.screen)
+            if self.current_level == 1 and self.found_body:
+                self.arouf.draw(self.screen)
             if self.current_level == 0:
                 self.brother.draw(self.screen)
                 if self.player.x > self.infoScreen.current_w - 700:
