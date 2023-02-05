@@ -68,7 +68,7 @@ class main_loop:
 
         self.brother_text = TextBox("What's up Tony! Are you ready to go see the Don? Go get my car keys real quick!", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 20)
         self.welcome_text = TextBox("Meet up with your brother Alfredo in the street", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 20)
-        self.get_key_text = TextBox("Find and get the keys and join Alfreado.", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 20)
+        self.get_key_text = TextBox("Find and get the keys and join Alfredo.", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 20)
         self.brother_death_text = TextBox("Jesus Christ! My brother just died... He tells me to go see the Don. I need to find him.", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 20)
 
     def run(self):
