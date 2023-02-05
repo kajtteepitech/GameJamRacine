@@ -80,7 +80,7 @@ class main_loop:
                         self.previous_music = self.current_scene
                         self.current_scene = "PAUSE_MENU"
                         self.pausemusic()
-                    elif self.current_scene == "GAME":
+                    elif self.current_scene != "MAIN_MENU":
                         self.player.left_pressed = False
                         self.player.right_pressed = False
                         self.previous_scene = self.current_scene
