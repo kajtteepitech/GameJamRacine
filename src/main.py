@@ -50,6 +50,12 @@ class main_loop:
             font=50,
             bg="navy",
         )
+        self.button_quit = Button(
+            "Quit",
+            (self.infoScreen.current_w * (3/4), 350),
+            font=50,
+            bg="navy",
+        )
 
         self.key = Key(self.infoScreen.current_w // 6, self.infoScreen.current_h - 150, (self.infoScreen.current_w // 25, self.infoScreen.current_h // 25))
         self.player = Player(self.infoScreen.current_w // 3, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
@@ -159,6 +165,9 @@ class main_loop:
             if self.button_start.click(event):
                 self.current_scene = "GAME"
                 self.roommusic()
+            if self.button_quit.click(event):
+                self.running = False
+                sys.exit()
 
             if (self.current_level == 1 and self.current_scene == "FOREST" and self.found_body == False):
                 self.found_body = True
@@ -202,6 +211,7 @@ class main_loop:
         if self.current_scene == "MAIN_MENU":
             self.screen.blit(self.bg_img, (0, 0))
             self.button_start.show(self.screen)
+            self.button_quit.show(self.screen)
 
         if self.current_scene == "GAME":
             self.screen.blit(self.scene1, (0, 0))
@@ -230,6 +240,7 @@ class main_loop:
 
         elif self.current_scene == "PAUSE_MENU":
             self.screen.blit(self.pause_img, (0, 0))
+            self.button_quit.show(self.screen)
 
         pygame.display.flip()
 
@@ -243,7 +254,7 @@ class main_loop:
     def roommusic(self):
         pygame.mixer.music.load("assets/music/room.mp3")
         pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(0.05)
+        pygame.mixer.music.set_volume(0.1)
     def pausemusic(self):
         pygame.mixer.music.load("assets/music/pausemusic.wav")
         pygame.mixer.music.play(-1)
