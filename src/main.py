@@ -136,9 +136,11 @@ class main_loop:
                     if event.key == pygame.K_r:
                         self.player.is_fighting = False
 
-            if (self.current_level == 0 and self.player.x >= 1470 and self.current_scene == "STREET"):
-                self.player.right_pressed = False
+            if (self.current_level == 0 and self.player.x >= self.infoScreen.current_w - 700 and self.current_scene == "STREET"):
+                # self.player.right_pressed = False
                 self.can_get_key = True
+                if self.player.x >= self.infoScreen.current_w - 400:
+                    self.player.right_pressed = False
 
             # if (self.current_level == 0 and self.current_scene == "GAME" and self.can_get_key == True):
 
