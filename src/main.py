@@ -25,7 +25,7 @@ class main_loop:
         #self.enemies = [enemy(self)]
         self.game_over = False
         self.can_get_key = False
-        self.found_body = False
+        self.found_body = True
 
         self.bg_img = pygame.image.load("assets/img/mainmenu.png")
         self.bg_img = pygame.transform.scale(self.bg_img, (self.infoScreen.current_w, self.infoScreen.current_h))
@@ -43,7 +43,7 @@ class main_loop:
         self.scene3 = pygame.transform.scale(self.scene3, (self.infoScreen.current_w, self.infoScreen.current_h))
 
         self.current_scene = "STREET"
-        self.current_level = 0
+        self.current_level = 1
 
         self.button_start = Button(
             "Start",
@@ -55,7 +55,7 @@ class main_loop:
         self.key = Key(self.infoScreen.current_w // 6, self.infoScreen.current_h - 150, (self.infoScreen.current_w // 25, self.infoScreen.current_h // 25))
         self.player = Player(self.infoScreen.current_w // 3, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
         self.brother = Brother(self.infoScreen.current_w - 300, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
-        self.body = Body(self.infoScreen.current_w - 300, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
+        self.body = Body(self.infoScreen.current_w // 2, self.infoScreen.current_h - 300, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
 
         self.previous_scene = ""
         self.previous_music = ""
@@ -158,7 +158,7 @@ class main_loop:
                 self.current_scene = "GAME"
                 self.roommusic()
 
-            if (self.current_level == 0 and self.current_scene == "FOREST" and self.found_body == False):
+            if (self.current_level == 1 and self.current_scene == "FOREST" and self.found_body == False):
                 self.found_body = True
 
 
@@ -195,9 +195,6 @@ class main_loop:
         if (self.current_level == 0 and self.current_scene == "GAME" and self.can_get_key == True):
             self.key.draw(self.screen, self.player)
 
-        if (self.current_level == 1 and self.current_scene == "FOREST" and self.found_body == True):
-            self.body.draw(self.screen)
-
         if self.current_scene == "MAIN_MENU":
             self.screen.blit(self.bg_img, (0, 0))
             self.button_start.show(self.screen)
@@ -222,7 +219,8 @@ class main_loop:
         if self.current_scene == "FOREST":
             self.screen.blit(self.scene3, (0, 0))
             self.player.draw(self.screen)
-            if self.current_level == 1:
+            if self.current_level == 1 and self.found_body:
+                self.body.draw(self.screen)
                 self.brother_death_text.show(self.screen)
 
         elif self.current_scene == "PAUSE_MENU":
