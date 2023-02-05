@@ -40,7 +40,7 @@ class main_loop:
         self.scene3 = pygame.image.load("assets/img/scene3.jpg")
         self.scene3 = pygame.transform.scale(self.scene3, (self.infoScreen.current_w, self.infoScreen.current_h))
 
-        self.current_scene = "MAIN_MENU"
+        self.current_scene = "STREET"
         self.current_level = 0
 
         self.button_start = Button(
@@ -50,6 +50,7 @@ class main_loop:
             bg="navy",
         )
 
+        self.key = Key(self.infoScreen.current_w // 6, self.infoScreen.current_h - 150, (self.infoScreen.current_w // 25, self.infoScreen.current_h // 25))
         self.player = Player(self.infoScreen.current_w // 3, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
         self.brother = Brother(self.infoScreen.current_w - 300, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
 
@@ -77,6 +78,11 @@ class main_loop:
                 sys.exit()
             
             if event.type == pygame.KEYDOWN:
+                if self.player.x <= self.key.x + 150 and self.player.x >= self.key.x - 150 and not self.key.picked_up:
+                    if event.key == pygame.K_e:
+                        self.key.picked_up = True
+                        self.current_level = 1
+
                 if event.key == pygame.K_ESCAPE:
                     self.running = False
                     sys.exit()
@@ -123,8 +129,7 @@ class main_loop:
                     if event.key == pygame.K_q:
                         self.player.left_pressed = True
                     if event.key == pygame.K_d:
-                        if (self.current_level == 0 and self.player.x < 1470):
-                            self.player.right_pressed = True
+                        self.player.right_pressed = True
                     if event.key == pygame.K_r:
                         self.player.is_fighting = True
 
@@ -143,8 +148,8 @@ class main_loop:
                 if self.player.x >= self.infoScreen.current_w - 400:
                     self.player.right_pressed = False
 
-            # if (self.current_level == 0 and self.current_scene == "GAME" and self.can_get_key == True):
-
+            if (self.current_level == 0 and self.player.x >= 1470 and self.current_scene == "STREET"):
+                self.player.right_pressed = False
 
             if self.button_start.click(event):
                 self.current_scene = "GAME"
@@ -192,6 +197,7 @@ class main_loop:
             self.player.draw(self.screen)
             if self.can_get_key:
                 self.get_key_text.show(self.screen)
+                self.key.draw(self.screen, self.player)
             elif self.current_level == 0:
                 self.welcome_text.show(self.screen)
 			
