@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import pygame
+import pygame.freetype
 import sys
 from src.Button import Button
 from src.Player import Player
@@ -8,11 +9,13 @@ from src.Player import Player
 class main_loop:
     def __init__(self):
         pygame.init()
+        pygame.font.init()
         self.infoScreen = pygame.display.Info()
         self.screen = pygame.display.set_mode((self.infoScreen.current_w, self.infoScreen.current_h), pygame.FULLSCREEN)
         self.clock = pygame.time.Clock()
         self.running = True
         self.font = pygame.font.SysFont("Arial", 30)
+        self.GAME_FONT = pygame.freetype.Font("assets/font1.ttf", 30)
         self.score = 0
         #self.player = player(self)
         #self.enemies = [enemy(self)]
@@ -29,6 +32,9 @@ class main_loop:
 
         self.scene2 = pygame.image.load("assets/img/scene2.jpg")
         self.scene2 = pygame.transform.scale(self.scene2, (self.infoScreen.current_w, self.infoScreen.current_h))
+
+        self.scene3 = pygame.image.load("assets/img/scene3.jpg")
+        self.scene3 = pygame.transform.scale(self.scene3, (self.infoScreen.current_w, self.infoScreen.current_h))
 
         self.current_scene = "MAIN_MENU"
 
@@ -51,6 +57,7 @@ class main_loop:
             self.events()
             self.update()
             self.draw()
+            self.gameplayevents()
 
     def events(self):
         for event in pygame.event.get():
@@ -74,6 +81,10 @@ class main_loop:
                             self.roommusic()
                         if self.previous_music == "MAIN_MENU":
                             self.menumusic()
+                        if self.previous_music == "STREET":
+                            self.streetmusic()
+                        if self.previous_music == "FOREST":
+                            self.forestmusic()
                     elif self.current_scene == "MAIN_MENU":
                         self.previous_scene = self.current_scene
                         self.previous_music = self.current_scene
@@ -87,6 +98,11 @@ class main_loop:
                         self.current_scene = "PAUSE_MENU"
                         self.pausemusic()
                     elif self.current_scene == "STREET":
+                        self.previous_scene = self.current_scene
+                        self.previous_music = self.current_scene
+                        self.current_scene = "PAUSE_MENU"
+                        self.pausemusic()
+                    elif self.current_scene == "FOREST":
                         self.previous_scene = self.current_scene
                         self.previous_music = self.current_scene
                         self.current_scene = "PAUSE_MENU"
@@ -117,10 +133,28 @@ class main_loop:
     def update(self):
         self.player.update(self.infoScreen)
 
-        if (self.player.x > self.infoScreen.current_w and self.current_scene == "GAME"):
+        if (self.player.x > self.infoScreen.current_w - 130 and self.current_scene == "GAME"):
             self.current_scene = "STREET"
             self.streetmusic()
             self.player.x = 50
+        if (self.player.x < 0 and self.current_scene == "STREET"):
+            self.current_scene = "GAME"
+            self.roommusic()
+            self.player.x = self.infoScreen.current_w - 200
+        if (self.player.x > self.infoScreen.current_w - 130 and self.current_scene == "STREET"):
+            self.current_scene = "FOREST"
+            self.forestmusic()
+            self.player.x = 50
+        if (self.player.x < 0 and self.current_scene == "FOREST"):
+            self.current_scene = "STREET"
+            self.streetmusic()
+            self.player.x = self.infoScreen.current_w - 200
+
+    def gameplayevents(self):
+        if (self.player.x > self.infoScreen.current_w - 200 and self.current_scene == "STREET"):
+            text_surface, rect = self.GAME_FONT.render("Hello World!", (255, 255, 255))
+            self.screen.blit(text_surface, (40, 250))
+
 
     def draw(self):
         self.screen.fill((255, 255, 255))
@@ -137,15 +171,22 @@ class main_loop:
             self.screen.blit(self.scene2, (0, 0))
             self.player.draw(self.screen)
 
+        if self.current_scene == "FOREST":
+            self.screen.blit(self.scene3, (0, 0))
+            self.player.draw(self.screen)
+
         elif self.current_scene == "PAUSE_MENU":
             self.screen.blit(self.pause_img, (0, 0))
 
         pygame.display.flip()
 
+    def forestmusic(self):
+        pygame.mixer.music.load("assets/music/forest.mp3")
+        pygame.mixer.music.play(-1)
     def streetmusic(self):
         pygame.mixer.music.load("assets/music/street.mp3")
         pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(3)
+        pygame.mixer.music.set_volume(5)
     def roommusic(self):
         pygame.mixer.music.load("assets/music/room.mp3")
         pygame.mixer.music.play(-1)
@@ -153,6 +194,7 @@ class main_loop:
     def pausemusic(self):
         pygame.mixer.music.load("assets/music/pausemusic.wav")
         pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.3)
     def menumusic(self):
         pygame.mixer.music.load("assets/music/mainmusic.wav")
         pygame.mixer.music.play(-1)
