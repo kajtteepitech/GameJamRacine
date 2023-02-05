@@ -59,6 +59,7 @@ class main_loop:
         self.brother_text = TextBox("What's up Tony! Are you ready to go see the Don? Go get my car keys real quick, I'm sure you'll get accepted in the family no problemo!", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 30)
         self.welcome_text = TextBox("Meet up with your brother Alfredo in the street", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 30)
         self.get_key_text = TextBox("Find and get the keys and join Alfreado.", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 30)
+        self.brother_death_text = TextBox("Jesus Christ! My brother just died... He tells me to go see the Don. I need to find him.", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 30)
 
     def run(self):
         self.menumusic()
@@ -166,6 +167,8 @@ class main_loop:
             self.current_scene = "FOREST"
             self.forestmusic()
             self.player.x = 50
+            if self.current_level == 3:
+                self.brother_death_text.show()
         if (self.player.x < 0 and self.current_scene == "FOREST"):
             self.current_scene = "STREET"
             self.streetmusic()
