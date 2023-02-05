@@ -75,6 +75,8 @@ class main_loop:
                             self.roommusic()
                         if self.previous_music == "MAIN_MENU":
                             self.menumusic()
+                        if self.previous_music == "STREET":
+                            self.streetmusic()
                     elif self.current_scene == "MAIN_MENU":
                         self.previous_scene = self.current_scene
                         self.previous_music = self.current_scene
@@ -114,10 +116,14 @@ class main_loop:
     def update(self):
         self.player.update(self.infoScreen)
 
-        if (self.player.x > self.infoScreen.current_w and self.current_scene == "GAME"):
+        if (self.player.x > self.infoScreen.current_w - 50 and self.current_scene == "GAME"):
             self.current_scene = "STREET"
             self.streetmusic()
             self.player.x = 50
+        if (self.player.x < 0 and self.current_scene == "STREET"):
+            self.current_scene = "GAME"
+            self.roommusic()
+            self.player.x = self.infoScreen.current_w - 50
 
     def draw(self):
         self.screen.fill((255, 255, 255))
@@ -142,7 +148,7 @@ class main_loop:
     def streetmusic(self):
         pygame.mixer.music.load("assets/music/street.mp3")
         pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(3)
+        pygame.mixer.music.set_volume(5)
     def roommusic(self):
         pygame.mixer.music.load("assets/music/room.mp3")
         pygame.mixer.music.play(-1)
@@ -150,6 +156,7 @@ class main_loop:
     def pausemusic(self):
         pygame.mixer.music.load("assets/music/pausemusic.wav")
         pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.3)
     def menumusic(self):
         pygame.mixer.music.load("assets/music/mainmusic.wav")
         pygame.mixer.music.play(-1)
