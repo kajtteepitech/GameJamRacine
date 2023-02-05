@@ -16,10 +16,10 @@ class Brother:
         self.image = pygame.transform.scale(self.image, scale)
 
     def init_sprites(self):
-        self.sprites["idle_left"].append(pygame.image.load("assets/img/player/idle_left_1.png"))
-        self.sprites["idle_left"].append(pygame.image.load("assets/img/player/idle_left_2.png"))
-        self.sprites["idle_left"].append(pygame.image.load("assets/img/player/idle_left_3.png"))
-        self.sprites["idle_left"].append(pygame.image.load("assets/img/player/idle_left_4.png"))
+        self.sprites["idle_left"].append(pygame.image.load("assets/img/brother/idle_left_1.png"))
+        self.sprites["idle_left"].append(pygame.image.load("assets/img/brother/idle_left_2.png"))
+        self.sprites["idle_left"].append(pygame.image.load("assets/img/brother/idle_left_3.png"))
+        self.sprites["idle_left"].append(pygame.image.load("assets/img/brother/idle_left_4.png"))
 
     def draw(self, screen):
         screen.blit(self.image, (self.x, self.y))
