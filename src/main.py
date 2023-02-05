@@ -161,7 +161,7 @@ class main_loop:
 
             if (self.current_level == 0 and self.player.x >= 1470 and self.current_scene == "STREET"):
                 self.player.right_pressed = False
-            if (self.current_level == 1 and self.player.x <= 500 and self.current_scene == "STREET" and self.found_body):
+            if (self.current_level == 1 and self.player.x <= 500 and self.current_scene == "STREET" and self.found_body and self.arouf.health > 0):
                 self.player.left_pressed = False
 
             if self.button_start.click(event):
