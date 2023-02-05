@@ -216,7 +216,7 @@ class main_loop:
         if self.current_scene == "GAME":
             self.screen.blit(self.scene1, (0, 0))
             self.player.draw(self.screen)
-            if self.can_get_key and self.found_body:
+            if self.can_get_key:
                 self.get_key_text.show(self.screen)
                 self.key.draw(self.screen, self.player)
             elif self.current_level == 0:
