@@ -40,7 +40,7 @@ class main_loop:
         self.scene3 = pygame.image.load("assets/img/scene3.jpg")
         self.scene3 = pygame.transform.scale(self.scene3, (self.infoScreen.current_w, self.infoScreen.current_h))
 
-        self.current_scene = "MAIN_MENU"
+        self.current_scene = "STREET"
         self.current_level = 0
 
         self.button_start = Button(
@@ -50,7 +50,7 @@ class main_loop:
             bg="navy",
         )
 
-        self.key = Key(400, 500, (self.infoScreen.current_w // 3, self.infoScreen.current_h - 380))
+        self.key = Key(self.infoScreen.current_w // 3, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
         self.player = Player(self.infoScreen.current_w // 3, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
         self.brother = Brother(self.infoScreen.current_w - 300, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
 
@@ -136,12 +136,11 @@ class main_loop:
                     if event.key == pygame.K_r:
                         self.player.is_fighting = False
 
-            if (self.current_level == 0 and self.player.x >= 1470 and self.current_scene == "STREET"):
-                self.player.right_pressed = False
+            if (self.current_level == 0 and self.player.x >= 1200 and self.current_scene == "STREET"):
                 self.can_get_key = True
 
-            if (self.current_level == 0 and self.current_scene == "GAME" and self.can_get_key == True):
-                self.key.draw(self.screen)
+            if (self.current_level == 0 and self.player.x >= 1470 and self.current_scene == "STREET"):
+                self.player.right_pressed = False
 
             if self.button_start.click(event):
                 self.current_scene = "GAME"
@@ -177,6 +176,9 @@ class main_loop:
 
     def draw(self):
         self.screen.fill((255, 255, 255))
+
+        if (self.current_level == 0 and self.current_scene == "GAME" and self.can_get_key == True):
+            self.key.draw(self.screen)
 
         if self.current_scene == "MAIN_MENU":
             self.screen.blit(self.bg_img, (0, 0))
