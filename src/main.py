@@ -5,6 +5,8 @@ import pygame.freetype
 import sys
 from src.Button import Button
 from src.Player import Player
+from src.Brother import Brother
+from src.Keys import Key
 
 class main_loop:
     def __init__(self):
@@ -20,6 +22,7 @@ class main_loop:
         #self.player = player(self)
         #self.enemies = [enemy(self)]
         self.game_over = False
+        self.can_get_key = False
 
         self.bg_img = pygame.image.load("assets/img/mainmenu.png")
         self.bg_img = pygame.transform.scale(self.bg_img, (self.infoScreen.current_w, self.infoScreen.current_h))
@@ -36,7 +39,8 @@ class main_loop:
         self.scene3 = pygame.image.load("assets/img/scene3.jpg")
         self.scene3 = pygame.transform.scale(self.scene3, (self.infoScreen.current_w, self.infoScreen.current_h))
 
-        self.current_scene = "MAIN_MENU"
+        self.current_scene = "STREET"
+        self.current_level = 0
 
         self.button_start = Button(
             "Start",
@@ -45,7 +49,9 @@ class main_loop:
             bg="navy",
         )
 
-        self.player = Player(self.infoScreen.current_w // 3, self.infoScreen.current_h - 300, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
+        self.
+        self.player = Player(self.infoScreen.current_w // 3, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
+        self.brother = Brother(self.infoScreen.current_w - 300, self.infoScreen.current_h - 380, (self.infoScreen.current_w // 7, self.infoScreen.current_h // 7 * 2.5))
 
         self.previous_scene = ""
         self.previous_music = ""
@@ -112,7 +118,8 @@ class main_loop:
                     if event.key == pygame.K_q:
                         self.player.left_pressed = True
                     if event.key == pygame.K_d:
-                        self.player.right_pressed = True
+                        if (self.current_level == 0 and self.player.x < 1470):
+                            self.player.right_pressed = True
                     if event.key == pygame.K_r:
                         self.player.is_fighting = True
 
@@ -124,7 +131,14 @@ class main_loop:
                         self.player.right_pressed = False
                     if event.key == pygame.K_r:
                         self.player.is_fighting = False
-            
+
+            if (self.current_level == 0 and self.player.x >= 1470 and self.current_scene == "STREET"):
+                self.player.right_pressed = False
+                self.can_get_key = True
+
+            if (self.current_level == 0 and self.current_scene == "GAME" and self.can_get_key == True):
+
+
             if self.button_start.click(event):
                 self.current_scene = "GAME"
                 self.roommusic()
@@ -132,6 +146,7 @@ class main_loop:
 
     def update(self):
         self.player.update(self.infoScreen)
+        self.brother.update(self.infoScreen)
 
         if (self.player.x > self.infoScreen.current_w - 130 and self.current_scene == "GAME"):
             self.current_scene = "STREET"
@@ -149,6 +164,7 @@ class main_loop:
             self.current_scene = "STREET"
             self.streetmusic()
             self.player.x = self.infoScreen.current_w - 200
+
 
     def gameplayevents(self):
         if (self.player.x > self.infoScreen.current_w - 200 and self.current_scene == "STREET"):
@@ -170,6 +186,8 @@ class main_loop:
         if self.current_scene == "STREET":
             self.screen.blit(self.scene2, (0, 0))
             self.player.draw(self.screen)
+            if self.current_level == 0:
+                self.brother.draw(self.screen)
 
         if self.current_scene == "FOREST":
             self.screen.blit(self.scene3, (0, 0))
