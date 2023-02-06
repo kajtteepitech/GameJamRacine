@@ -41,6 +41,12 @@ class main_loop:
         self.scene3 = pygame.image.load("assets/img/scene3.jpg")
         self.scene3 = pygame.transform.scale(self.scene3, (self.infoScreen.current_w, self.infoScreen.current_h))
 
+        self.lvl10 = pygame.image.load("assets/img/Lvl10.jpg")
+
+        self.lvl42 = pygame.image.load("assets/img/Lvl42.jpg")
+
+        self.lvl50 = pygame.image.load("assets/img/Lvl50.jpg")
+
         self.current_scene = "MAIN_MENU"
         self.current_level = 0
 
@@ -171,8 +177,29 @@ class main_loop:
                 self.running = False
                 sys.exit()
 
-            if (self.current_level == 1 and self.current_scene == "FOREST" and self.found_body == False):
+            if (self.current_level == 2 and self.current_scene == "FOREST" and self.found_body == False):
                 self.found_body = True
+            if (self.current_level == 1 and self.current_scene == "STREET"):
+                self.current_scene = "LVL10"
+                self.lvlupmusic()
+            if (self.current_scene == "LVL10" and event.type == pygame.KEYDOWN and event.key == pygame.K_e):
+                self.current_scene = "STREET"
+                self.streetmusic()
+                self.current_level = 2
+            if (self.current_scene == "LVL42" and event.type == pygame.KEYDOWN and event.key == pygame.K_e):
+                self.current_scene = "STREET"
+                self.streetmusic()
+                self.current_level = 3
+            if (self.current_level == 2 and self.current_scene == "STREET" and self.found_body == True):
+                self.current_scene = "LVL42"
+                self.lvlupmusic()
+            if (self.current_level == 4 and self.current_scene == "STREET"):
+                self.current_scene = "LVL50"
+                self.lvlupmusic()
+            if (self.current_scene == "LVL50" and event.type == pygame.KEYDOWN and event.key == pygame.K_e):
+                self.current_scene = "STREET"
+                self.streetmusic()
+                self.current_level = 5
 
 
     def update(self):
@@ -225,9 +252,11 @@ class main_loop:
         if self.current_scene == "STREET":
             self.screen.blit(self.scene2, (0, 0))
             self.player.draw(self.screen)
-            if self.current_level == 1 and self.found_body:
+            if self.current_level == 3 and self.found_body:
                 if self.arouf.health > 0:
                     self.arouf.draw(self.screen)
+                if self.arouf.health <= 0:
+                    self.current_level = 4
             if self.current_level == 0:
                 self.brother.draw(self.screen)
                 if self.player.x > self.infoScreen.current_w - 700:
@@ -236,9 +265,16 @@ class main_loop:
         if self.current_scene == "FOREST":
             self.screen.blit(self.scene3, (0, 0))
             self.player.draw(self.screen)
-            if self.current_level == 1 and self.found_body:
+            if self.current_level == 2 and self.found_body:
                 self.body.draw(self.screen)
                 self.brother_death_text.show(self.screen)
+
+        if self.current_scene == "LVL10":
+            self.screen.blit(self.lvl10, (0, 0))
+        if self.current_scene == "LVL42":
+            self.screen.blit(self.lvl42, (0, 0))
+        if self.current_scene == "LVL50":
+            self.screen.blit(self.lvl50, (0, 0))
 
         elif self.current_scene == "PAUSE_MENU":
             self.screen.blit(self.pause_img, (0, 0))
@@ -246,6 +282,10 @@ class main_loop:
 
         pygame.display.flip()
 
+    def lvlupmusic(self):
+        pygame.mixer.music.load("assets/music/donachived.wav")
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.5)
     def forestmusic(self):
         pygame.mixer.music.load("assets/music/forest.mp3")
         pygame.mixer.music.play(-1)
