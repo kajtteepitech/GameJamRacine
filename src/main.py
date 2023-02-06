@@ -72,10 +72,11 @@ class main_loop:
         self.previous_scene = ""
         self.previous_music = ""
 
-        self.brother_text = TextBox("What's up Tony! Are you ready to go see the Don? Go get my car keys real quick!", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 20)
+        self.brother_text = TextBox("What's up Tony! Are you ready to go seeing the Don? Go get my car keys real quick!", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 20)
         self.welcome_text = TextBox("Meet up with your brother Alfredo in the street", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 20)
-        self.get_key_text = TextBox("Find and get the keys and join Alfredo.", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 20)
+        self.get_key_text = TextBox("Find and get the keys then join Alfredo.", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 20)
         self.brother_death_text = TextBox("Jesus Christ! My brother just died... He tells me to go see the Don. I need to find him.", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 20)
+        self.arouf_text = TextBox("Wolla moi j'ai tue ton frr, je suis le plus beau de tous les rebeux! T'as pas une coca bien frais chacal?", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 20)
 
     def run(self):
         self.menumusic()
@@ -255,6 +256,7 @@ class main_loop:
             if self.current_level == 3 and self.found_body:
                 if self.arouf.health > 0:
                     self.arouf.draw(self.screen)
+                    self.arouf_text.show(self.screen)
                 if self.arouf.health <= 0:
                     self.current_level = 4
             if self.current_level == 0:
