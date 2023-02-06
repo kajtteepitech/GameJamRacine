@@ -74,7 +74,7 @@ class main_loop:
 
         self.brother_text = TextBox("What's up Tony! Are you ready to go see the Don? Go get my car keys real quick!", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 20)
         self.welcome_text = TextBox("Meet up with your brother Alfredo in the street", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 20)
-        self.get_key_text = TextBox("Find and get the keys and join Alfreado.", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 20)
+        self.get_key_text = TextBox("Find and get the keys and join Alfredo.", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 20)
         self.brother_death_text = TextBox("Jesus Christ! My brother just died... He tells me to go see the Don. I need to find him.", (255, 255, 255), self.infoScreen.current_w // 2, 75, "assets/fonts/default.ttf", 20)
 
     def run(self):
@@ -167,7 +167,7 @@ class main_loop:
 
             if (self.current_level == 0 and self.player.x >= 1470 and self.current_scene == "STREET"):
                 self.player.right_pressed = False
-            if (self.current_level == 1 and self.player.x <= 500 and self.current_scene == "STREET" and self.found_body):
+            if (self.current_level == 1 and self.player.x <= 350 and self.current_scene == "STREET" and self.found_body and self.arouf.health > 0):
                 self.player.left_pressed = False
 
             if self.button_start.click(event):
